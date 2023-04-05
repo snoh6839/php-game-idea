@@ -5,6 +5,7 @@ array("name" => "검", "type" => "item", "level" => 1, "ingredients" => array("�
 array("name" => "방패", "type" => "item", "level" => 1, "ingredients" => array("나무", "가죽")),
 array("name" => "반지", "type" => "item", "level" => 1, "ingredients" => array("금", "다이아몬드")),
 );
+private $type = array("검", "방패", "반지");
 private $ingredients = array("철", "나무", "가죽", "금", "다이아몬드");
 private $mathOperators = array("+", "-", "*");
 
@@ -25,6 +26,10 @@ return $answer == $problem["answer"];
 function getIngredient() {
 // Get a random ingredient for the player to obtain
 return $this->ingredients[array_rand($this->ingredients)];
+}
+
+function getItem() {
+    return $this->type[array_rand($this->type)];
 }
 
 function upgradeItem($itemName) {
@@ -57,6 +62,7 @@ if ($itemLevel < 3) { foreach ($ingredients as $ingredient) { $ingredientIndex=a
     // Display the player's current inventory of ingredients and items
     $inventory = $_SESSION['inventory'];
     echo "<h2>인벤토리:</h2>";
+    
     if (count($inventory) == 0) {
     echo "<p>아이템이나 재료가 없습니다.</p>";
     } else {
@@ -93,19 +99,24 @@ if ($itemLevel < 3) { foreach ($ingredients as $ingredient) { $ingredientIndex=a
     $ingredient = $this->getIngredient();
     $inventory = $_SESSION['inventory'];
     $ingredientIndex = array_search($ingredient, array_column($inventory, 'name'));
+    $itemIndex = array_search($this->getItem(), array_column($inventory, 'name'));
     if ($ingredientIndex === false) {
     array_push($_SESSION['inventory'], array('name' => $ingredient, 'quantity' => 1, 'type' => 'ingredient'));
+    array_push($_SESSION['inventory'], array('name' => $this->getItem(), 'quantity' => 1, 'type' => 'item'));
     } else {
     $_SESSION['inventory'][$ingredientIndex]['quantity']++;
+    $_SESSION['inventory'][$itemIndex]['quantity']++;
     }
     $this->displayInventory();
     echo "<p>{$ingredient}을(를) 얻었습니다!</p>";
     } else {
-    echo "<p>틀렸습니다. 다시 시도하세요.</p>";
+    echo "<p>틀렸습니다. {$this->getItem()}을(를) 드릴테니 다시 시도하세요.</p>";
     }
     unset($_SESSION['problem']);
     $item = $_POST['upgrade'];
+    
     if ($item) {
+    echo "<form method='post'><button type='submit' value='upgrade'>강화</button>";
     $upgradeResult = $this->upgradeItem($item);
     if ($upgradeResult === true) {
     $this->displayInventory();
@@ -119,6 +130,7 @@ if ($itemLevel < 3) { foreach ($ingredients as $ingredient) { $ingredientIndex=a
     echo "<p>다음 문제를 푸세요: {$problem['problem']}</p><form method='post'><label for='answer'>답변:</label><input type='text' id='answer' name='answer'><button type='submit'>확인</button></form>";
     }
     }
+    
 
     $game = new UpgradeGame();
 
