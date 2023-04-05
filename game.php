@@ -1,10 +1,5 @@
 <?php
 class UpgradeGame {
-    echo "<form method='post'>
-    <label for='answer'>답변:</label>
-    <input type='text' id='answer' name='answer'>
-    <button type='submit'>확인</button>
-    </form>";
 private $items = array(
 array("name" => "검", "type" => "item", "level" => 1, "ingredients" => array("철", "나무")),
 array("name" => "방패", "type" => "item", "level" => 1, "ingredients" => array("나무", "가죽")),
@@ -86,7 +81,7 @@ if ($itemLevel < 3) { foreach ($ingredients as $ingredient) { $ingredientIndex=a
     $this->displayInventory();
     $problem = $this->generateMathProblem();
     $_SESSION['problem'] = $problem;
-    echo "<p>다음 문제를 푸세요: {$problem['problem']}</p>";
+    echo "<p>다음 문제를 푸세요: {$problem['problem']}</p><form method='post'><label for='answer'>답변:</label><input type='text' id='answer' name='answer'><button type='submit'>확인</button></form>";
     }
 
     function playGame() {
@@ -121,7 +116,7 @@ if ($itemLevel < 3) { foreach ($ingredients as $ingredient) { $ingredientIndex=a
     }
     $problem = $this->generateMathProblem();
     $_SESSION['problem'] = $problem;
-    echo "<p>다음 문제를 푸세요: {$problem['problem']}</p>";
+    echo "<p>다음 문제를 푸세요: {$problem['problem']}</p><form method='post'><label for='answer'>답변:</label><input type='text' id='answer' name='answer'><button type='submit'>확인</button></form>";
     }
     }
 
