@@ -1,12 +1,10 @@
 <?php
-
-<form method="post">
-    <label for="answer">답변:</label>
-    <input type="text" id="answer" name="answer">
-    <button type="submit">확인</button>
-</form>
-
 class UpgradeGame {
+    echo "<form method='post'>
+    <label for='answer'>답변:</label>
+    <input type='text' id='answer' name='answer'>
+    <button type='submit'>확인</button>
+    </form>";
 private $items = array(
 array("name" => "검", "type" => "item", "level" => 1, "ingredients" => array("철", "나무")),
 array("name" => "방패", "type" => "item", "level" => 1, "ingredients" => array("나무", "가죽")),
